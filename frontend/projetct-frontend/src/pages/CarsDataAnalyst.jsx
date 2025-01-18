@@ -25,8 +25,8 @@ import PriceOutlierBoxplot from "../components/Charts_cars/PriceOutlierBoxplot";
 const CarsDataAnalyst = () => {
   const { titre, setTitre } = useTitre();
   setTitre("Cars Data Analyst");
-  return (<div className="h-screen w-full m-5">
-     <div className="grid grid-cols-2 gap-2">
+  return (<div className="h-screen w-full ">
+     <div className="lg:grid lg:grid-cols-2 lg:gap-2">
         <PriceDistribution/>
         <FuelTypePieChart/>
         <KilometrageVsPrix/>

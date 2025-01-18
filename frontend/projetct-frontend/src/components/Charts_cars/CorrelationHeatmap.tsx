@@ -1,11 +1,6 @@
 import React from "react";
-import { Chart as ChartJS, CategoryScale, LinearScale, Tooltip, Title } from "chart.js";
-import { MatrixController, MatrixElement } from "chartjs-chart-matrix";
-import { Chart } from "react-chartjs-2";
+import Plot from "react-plotly.js";
 import cars_data from "../../data/cars_data.json";
-
-// Register components
-ChartJS.register(MatrixController, MatrixElement, CategoryScale, LinearScale, Tooltip, Title);
 
 // Helper function to calculate correlation matrix
 const calculateCorrelationMatrix = (data: any[], features: string[]) => {
@@ -36,60 +31,33 @@ const calculateCorrelationMatrix = (data: any[], features: string[]) => {
 const numericalFeatures = ["prix", "kilometrage", "puissance_fiscale", "annee-modele"];
 const correlationMatrix = calculateCorrelationMatrix(cars_data, numericalFeatures);
 
-// Prepare data for the heatmap
-const data = {
-  datasets: [
-    {
-      label: "Correlation Matrix",
-      data: correlationMatrix.flatMap((row, i) =>
-        row.map((value, j) => ({
-          x: numericalFeatures[j],
-          y: numericalFeatures[i],
-          v: value,
-        }))
-      ),
-      backgroundColor: (context: any) => {
-        const value = context.raw.v;
-        const color = value > 0 ? `rgba(0, 0, 255, ${value})` : `rgba(255, 0, 0, ${Math.abs(value)})`;
-        return color;
-      },
-      borderWidth: 1,
-      width: ({ chart }: any) => chart.width / numericalFeatures.length - 10,
-      height: ({ chart }: any) => chart.height / numericalFeatures.length - 10,
-    },
-  ],
-};
-
-// Chart options
-const options = {
-  scales: {
-    x: {
-      type: "category",
-      labels: numericalFeatures,
-    },
-    y: {
-      type: "category",
-      labels: numericalFeatures,
-    },
-  },
-  plugins: {
-    tooltip: {
-      callbacks: {
-        title: () => "",
-        label: (context: any) => `Correlation: ${context.raw.v.toFixed(2)}`,
-      },
-    },
-    title: {
-      display: true,
-      text: "Carte de Corrélation des Caractéristiques Numériques",
-    },
-  },
-};
-
 const CorrelationHeatmap: React.FC = () => {
   return (
     <div className="w-full p-2 shadow-lg rounded-md bg-white">
-      <Chart type="matrix" data={data} options={options} />
+      <Plot
+        data={[
+          {
+            z: correlationMatrix,
+            x: numericalFeatures,
+            y: numericalFeatures,
+            type: "heatmap",
+            colorscale: "RdBu",
+            zmin: -1,
+            zmax: 1,
+            colorbar: {
+              title: "Correlation",
+              titleside: "right",
+            },
+          },
+        ]}
+        layout={{
+          title: "Carte de Corrélation des Caractéristiques Numériques",
+          xaxis: { title: "Features", automargin: true },
+          yaxis: { title: "Features", automargin: true },
+          margin: { l: 50, r: 50, t: 50, b: 50 },
+        }}
+        style={{ width: "100%", height: "100%" }}
+      />
     </div>
   );
 };

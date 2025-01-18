@@ -1,6 +1,9 @@
 import React, { useState, ReactNode, createContext, useContext } from 'react';
 import Header from '../components/Header/index';
 import Sidebar from '../components/Sidebar/index';
+import Navbar from '../components/Navbar';
+
+
 
 const TitreContext = createContext({
   titre: 'light',
@@ -17,18 +20,18 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        {/* <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> */}
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
           {/* <!-- ===== Header Start ===== --> */}
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} titre={titre} />
+          {/* <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} titre={titre} /> */}
           {/* <!-- ===== Header End ===== --> */}
-
+          <Navbar/>
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
-            <div className=" mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            <div className=" mx-auto max-w-screen-2xl p-10 rounded-lg">
               {children}
             </div>
           </main>

@@ -11,7 +11,7 @@ const Header = (props: {
   titre:string;
 }) => {
   return (
-    <header className="sticky top-0 z-999 flex w-full bg-body drop-shadow-none ">
+    <header className="sticky top-0 z-999 flex w-full bg-black drop-shadow-none ">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
           {/* <!-- Hamburger Toggle BTN --> */}
@@ -62,7 +62,7 @@ const Header = (props: {
           </Link> */}
         </div>
             <div className='w-full flex justify-center'>
-                  <h1 className='text-xl font-bold text-gray'>{props.titre}</h1>
+                  <h1 className='text-xl font-bold text-white'>{props.titre}</h1>
             </div>
         {/* <div className="hidden sm:block">
           <form action="https://formbold.com/s/unique_form_id" method="POST">

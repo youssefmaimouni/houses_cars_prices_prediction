@@ -1,69 +1,57 @@
-import React from 'react';
-import { Chart as ChartJS, Tooltip, Legend, Title, LinearScale, BarElement } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import React from "react";
+import Plot from "react-plotly.js";
+import cars_data from "../../data/cars_data.json";
 
-// Register necessary Chart.js components
-ChartJS.register(LinearScale, BarElement, Tooltip, Legend, Title);
+// Helper function to calculate correlation matrix
+const calculateCorrelationMatrix = (data: any[], features: string[]) => {
+  const matrix = features.map((f1) =>
+    features.map((f2) => {
+      const values1 = data.map((item) => item[f1]).filter((v) => typeof v === "number");
+      const values2 = data.map((item) => item[f2]).filter((v) => typeof v === "number");
 
-// Sample data for correlation matrix (you can compute this using pandas or any other method)
-const correlationMatrix = [
-  [1, 0.2, -0.3, 0.4],
-  [0.2, 1, 0.5, -0.6],
-  [-0.3, 0.5, 1, 0.7],
-  [0.4, -0.6, 0.7, 1]
-];
+      if (values1.length !== values2.length || values1.length === 0) return 0;
 
-const labels = ['prix', 'kilometrage', 'puissance_fiscale', 'annee-modele'];
+      const mean1 = values1.reduce((sum, v) => sum + v, 0) / values1.length;
+      const mean2 = values2.reduce((sum, v) => sum + v, 0) / values2.length;
 
-// Convert correlation matrix into a data structure suitable for a chart
-const data = {
-  labels: labels,
-  datasets: correlationMatrix.map((row, rowIndex) => ({
-    label: labels[rowIndex],
-    data: row,
-    backgroundColor: row.map(value => {
-      // Map correlation values to colors (this is a simplified version)
-      if (value >= 0.7) return '#FF5733'; // Strong positive correlation
-      if (value <= -0.7) return '#33C1FF'; // Strong negative correlation
-      return '#D3D3D3'; // Neutral correlation
-    }),
-    borderColor: 'white',
-    borderWidth: 1,
-  }))
+      const numerator = values1.reduce((sum, v, i) => sum + (v - mean1) * (values2[i] - mean2), 0);
+      const denominator = Math.sqrt(
+        values1.reduce((sum, v) => sum + Math.pow(v - mean1, 2), 0) *
+          values2.reduce((sum, v) => sum + Math.pow(v - mean2, 2), 0)
+      );
+
+      return denominator ? numerator / denominator : 0;
+    })
+  );
+
+  return matrix;
 };
 
-// Chart options
-const options = {
-  responsive: true,
-  plugins: {
-    title: {
-      display: true,
-      text: 'Carte de Corrélation des Caractéristiques Numériques',
-    },
-    tooltip: {
-      callbacks: {
-        label: function (tooltipItem: any) {
-          return `${tooltipItem.raw} (correlation)`;
-        },
-      },
-    },
-  },
-  scales: {
-    x: {
-      beginAtZero: true,
-    },
-    y: {
-      beginAtZero: true,
-    },
-  },
-};
+// Extract numerical features
+const numericalFeatures = ["prix", "kilometrage", "puissance_fiscale", "annee-modele"];
+const correlationMatrix = calculateCorrelationMatrix(cars_data, numericalFeatures);
 
-const CorrelationMatrixChart: React.FC = () => {
+const CorrelationHeatmap: React.FC = () => {
   return (
-    <div className="w-full p-2 shadow-lg rounded-md bg-white">
-      <Bar data={data} options={options} />
-    </div>
+    <Plot
+      data={[
+        {
+          z: correlationMatrix,
+          x: numericalFeatures,
+          y: numericalFeatures,
+          type: "heatmap",
+          colorscale: "RdBu",
+          zmid: 0,
+        },
+      ]}
+      layout={{
+        title: "Correlation Heatmap",
+        xaxis: { title: "Features" },
+        yaxis: { title: "Features" },
+        autosize: true,
+      }}
+    />
   );
 };
 
-export default CorrelationMatrixChart;
+export default CorrelationHeatmap;

@@ -6,6 +6,7 @@ import { IconCloud } from "../components/magicui";
 // import "../../public/static/css/home.css"
 "use client";
 import { InteractiveGridPattern } from "../components/interactive-grid-pattern";
+import Navbar from "../components/Navbar";
 
 const images = [
   "/react-logo.png",
@@ -20,12 +21,17 @@ const images = [
   "/ts-logo.png",
   "/html-logo.png",
   "/css-logo.png",
+  "/neural-network.png",
+  "/pandas.png",
+  "/numpy.png",
+  "/matplotlib.png",
+  "/condas.png",
+  "/Karas.png",
 ];
 
 const Home = () => {
   const cn = (...args) => args.filter(Boolean).join(' ');
   const [scrollY, setScrollY] = useState(0);
-  const controls = useAnimation();
 
   const handleScroll = () => {
     setScrollY(window.scrollY);
@@ -39,16 +45,54 @@ const Home = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // Trigger animation based on scroll position
-    if (scrollY > 200) {
-      controls.start({ opacity: 1, x: 0, transition: { duration: 1 } });
-    } else {
-      controls.start({ opacity: 0, x: -100, transition: { duration: 1 } });
-    }
-  }, [scrollY, controls]);
+  const services = [
+    {
+      title: "Nettoyage de Données pour un Ensemble de Données sur les Voitures",
+      description:
+        "Dans le monde d'aujourd'hui, axé sur les données, la qualité de vos données influence directement la précision de vos analyses. Notre processus complet de nettoyage de données pour les ensembles de données sur les voitures garantit une base solide pour des analyses et des prédictions fiables.",
+      image:"/cars_cleaning.png",
+      link: "/Data_Cleaning/Houses",
+    },
+    {
+      title: "Analyser des Données des Voitures",
+      description:
+        "Explorez et comprenez les données liées aux voitures grâce à des visualisations intuitives et des statistiques descriptives. Plongez dans les tendances et obtenez des perspectives claires pour des prises de décision éclairées.",
+      image: "/cars_analse.png",
+      link: "/Analyse/cars",
+    },
+    {
+      title: "Prédisez les Prix des Voitures avec un Modele de Machine Learning Avancées",
+      description:
+        "Découvrez notre solution innovante pour prédire les prix des voitures grâce à des techniques avancées de machine learning. Ce projet intègre un modèle de réseau neuronal sophistiqué construit avec TensorFlow, conçu pour fournir des estimations précises et fiables des prix des véhicules.",
+      image: "/cars_model.png",
+      link: "/Models/Cars-model",
+    },
+    {
+      title: "Nettoyage de Données pour le Secteur Immobilier",
+      description:
+        "Dans un marché immobilier compétitif, des données fiables sont essentielles pour prendre des décisions éclairées. Ce projet se concentre sur le nettoyage et la préparation de données immobilières provenant de Casablanca pour une analyse précise.",
+      image: "/house_cleaning.png",
+      link: "/Data_Cleaning/Houses",
+    },
+    {
+      title: "Analyse des Données des Maisons",
+      description:
+        "Découvrez les tendances du marché immobilier grâce à des visualisations et des graphiques interactifs. Analysez des indicateurs clés comme les prix par surface, la répartition des propriétés, les conditions des biens, et bien plus encore.",
+      image: "/house_analyse.png",
+      link: "/Analyse/houses",
+    },
+    {
+      title: "Prédiction des Prix Immobiliers",
+      description:
+        "Prédisez les prix des biens immobiliers en fonction de leurs caractéristiques grâce à un modèle avancé. Notre outil innovant utilise des algorithmes de machine learning pour offrir des estimations précises sur les propriétés au Maroc, en tenant compte de facteurs tels que la localisation, la surface et l'état.",
+      image: "/house_model.png",
+      link: "/Models/Houses-model",
+    },
+  ];
+  
   return (
-        <div className="bg-gray-100 text-gray-800">
+        <div className="bg-gray-100 text-gray-800 ">
+           <Navbar/>
                 {/* <InteractiveGridPattern
         className={cn(
           "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]",
@@ -61,13 +105,13 @@ const Home = () => {
       /> */}
           {/* Hero Section */}
           <motion.section
-        className="bg-white h-screen :bg-gray-900"
+        className="relative bg-white h-screen :bg-gray-900"
         initial={{ opacity: 0 }}
         animate={{opacity:1}}
         transition={{ duration: 1 }}
       >
          <video
-        className="absolute z-0 top-0 left-0 h-full w-full object-cover"
+        className="absolute z-0 top-0 left-0 h-screen w-full object-cover"
         src="/istockphoto-1961001965-640_adpp_is.mp4" // Replace with the path to your video file
         autoPlay
         loop
@@ -106,7 +150,7 @@ const Home = () => {
           </motion.div>
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex z-50">
             <motion.img
-              src="/home.jpg"
+              src="/home-removebg-preview.png"
               alt="hero image"
               initial={{ opacity: 0 }}
               animate={{opacity:1}}
@@ -115,15 +159,56 @@ const Home = () => {
           </div>
         </div>
       </motion.section>
+      <section className=" p-10 bg-[url('/section4-bg.png')] bg-no-repeat bg-cover bg-center">
+      <div className="container mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold">
+            <span className="text-blue-500">Services</span>
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className="box p-6 bg-white shadow-lg rounded-lg text-center"
+            >
+              <div className="img-box mb-4">
+                {service.icon ? (
+                  service.icon
+                ) : (
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="mx-auto h-20"
+                  />
+                )}
+              </div>
+              <div className="detail-box">
+                <h5 className="text-xl font-semibold mb-2">{service.title}</h5>
+                <p className="text-gray-600 mb-4">{service.description}</p>
+                <a
+                  href={service.link}
+                  className="text-blue-500 hover:underline font-semibold"
+                >
+                  Afficher
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
       {/* Second Section */}
-      <section className="bg-[url('/section1-bg.png')] bg-no-repeat bg-cover bg-center h-screen ">
-        <div className="container grid grid-cols-2 items-center h-screen  mx-auto px-6 z-50">
+      {/* <section className="relative h-screen ">
+      <div 
+    className="absolute inset-0 bg-[url('/section4-bg.png')] bg-no-repeat bg-cover bg-center blur " ></div>
+        <div className="container grid grid-cols-2 items-center h-screen  mx-auto px-6 z-50"> */}
           {/* Titre de la section */}
-          <div>
+          {/* <div>
             <motion.div
               className="text-center mb-8 z-50"
               initial={{ opacity: 0, y: -50 }}
-              animate={controls}
+              animate={{opacity:1 , y:1}}
               transition={{ duration: 0.5 }}
             >
               <h2 className="text-3xl font-bold text-gray-100 z-50">
@@ -132,13 +217,13 @@ const Home = () => {
               <p className="text-lg text-gray-200 mt-2 z-50">
                 Libérez le Pouvoir des Données Propres
               </p>
-            </motion.div>
+            </motion.div> */}
 
             {/* Description de la section */}
-            <motion.div
+            {/* <motion.div
               className="max-w-4xl mx-auto text-gray-300 z-50"
               initial={{ opacity: 0, x: -50 }}
-              animate={controls}
+              animate={{opacity:1,x:1}}
               transition={{ duration: 0.5, delay: 0.5 }}
             >
               <p className="mb-6  z-50">
@@ -152,7 +237,7 @@ const Home = () => {
             <motion.div
               className="text-center mt-8  z-50"
               initial={{ scale: 0.5, opacity: 0 }}
-              animate={controls}
+              animate={{opacity:1}}
               transition={{ duration: 0.5, delay: 1 }}
             >
               <a
@@ -162,17 +247,17 @@ const Home = () => {
                 Explorer le Notebook
               </a>
             </motion.div>
-          </div>
+          </div> */}
 
           {/* Grille des fonctionnalités */}
-          <motion.div
+          {/* <motion.div
             className="grid gap-8 z-50"
             initial={{ opacity: 0 }}
-            animate={controls}
+            animate={{opacity:1}}
             transition={{ duration: 1, delay: 1 }}
           >
             {/* Section "Ce Que Nous Offrons" */}
-            <div>
+            {/*<div>
               <h3 className="text-2xl font-semibold text-gray-400 mb-4 z-50">
                 Ce Que Nous Offrons
               </h3>
@@ -196,7 +281,7 @@ const Home = () => {
             </div>
 
             {/* Section "Points Forts" */}
-            <div>
+           {/* <div>
               <h3 className="text-2xl font-semibold text-gray-400 mb-4 z-50">
                 Points Forts
               </h3>
@@ -221,20 +306,14 @@ const Home = () => {
             </div>
           </motion.div>
         </div>
-      </section>
-      <section className="bg-gray-50  h-screen">
-      <video
-        className="absolute z-0 left-0 h-screen w-full object-cover"
-        src="/istockphoto-1961001965-640_adpp_is.mp4" // Replace with the path to your video file
-        autoPlay
-        loop
-        muted
-      ></video>
+      </section> */}
+      {/* <section className="bg-gray-50  h-screen">
+      
         <div className="grid grid-cols-2 items-center h-screen  mx-auto px-6  z-50">
           <motion.div
             className="container mx-auto px-6 pt-8 lg:px-20 text-start z-50"
             initial={{ opacity: 0, x: -50 }}
-            animate={controls}
+            animate={{opacity:1}}
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl font-bold text-gray-800 mb-4 z-50">
@@ -249,7 +328,7 @@ const Home = () => {
             <motion.div
               className="text-center mt-8 z-50"
               initial={{ scale: 0.5, opacity: 0 }}
-              animate={controls}
+              animate={{opacity:1}}
               transition={{ duration: 0.5, delay: 0.5 }}
             >
               <a
@@ -262,7 +341,7 @@ const Home = () => {
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 50 }}
-            animate={controls}
+            animate={{opacity:1,x:1}}
             transition={{ duration: 0.5, delay: 0.5 }}
             className=" z-50"
           >
@@ -275,7 +354,7 @@ const Home = () => {
           <motion.div
             className="container mx-auto px-6 pt-8 lg:px-20 text-start"
             initial={{ opacity: 0, x: -50 }}
-            animate={controls}
+            animate={{opacity:1}}
             transition={{ duration: 0.5 }}
           >
            <h1 className="text-2xl font-bold text-gray-100 mb-4">
@@ -303,7 +382,7 @@ const Home = () => {
             <motion.div
               className="text-center mt-8"
               initial={{ scale: 0.8, opacity: 0 }}
-              animate={controls}
+              animate={{opacity:1}}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
               <a
@@ -316,7 +395,7 @@ const Home = () => {
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 50 }}
-            animate={controls}
+            animate={{opacity:1,x:1}}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
             <img src="/cars_model_image.webp" alt="hero image" />
@@ -324,20 +403,13 @@ const Home = () => {
         </div>
       </section>
       <section className="bg-gray-50 h-screen">
-      <video
-        className="absolute z-0  left-0 h-full w-full object-cover"
-        src="/istockphoto-1961001965-640_adpp_is.mp4" // Replace with the path to your video file
-        autoPlay
-        loop
-        muted
-      ></video>
-      <div className="container grid grid-cols-2 gap-3 items-center h-screen mx-auto px-6 z-50">
+      <div className="container grid grid-cols-2 gap-3 items-center h-screen mx-auto px-6 z-50"> */}
         {/* Titre de la section */}
-        <div>
+        {/* <div>
           <motion.div
             className="text-center mb-8 z-50"
             initial={{ opacity: 0, y: -50 }}
-            animate={controls}
+            animate={{opacity:1 , y:1}}
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold text-gray-900 z-50">
@@ -349,7 +421,7 @@ const Home = () => {
           </motion.div>
 
           {/* Description de la section */}
-          <motion.div
+          {/*<motion.div
             className="max-w-4xl mx-auto text-gray-800 z-50"
             initial={{ opacity: 0, x: -50 }}
             animate={{opacity:1,x:1}}
@@ -365,7 +437,7 @@ const Home = () => {
           <motion.div
             className="text-center mt-8 z-50"
             initial={{ scale: 0.5, opacity: 0 }}
-            animate={controls}
+            animate={{opacity:1}}
             transition={{ duration: 0.5, delay: 1 }}
           >
             <a
@@ -375,17 +447,17 @@ const Home = () => {
               Explorer le Notebook
             </a>
           </motion.div>
-        </div>
+        </div> */}
 
         {/* Grille des fonctionnalités */}
-        <motion.div
+        {/* <motion.div
           className="grid gap-8 z-50"
           initial={{ opacity: 0 }}
-          animate={controls}
+          animate={{opacity:1}}
           transition={{ duration: 1, delay: 1 }}
-        >
+        > */}
           {/* Section "Ce Que Nous Offrons" */}
-          <div>
+          {/* <div>
             <h3 className="text-2xl font-semibold text-gray-900 mb-4 z-50">
               Ce Que Nous Offrons
             </h3>
@@ -405,10 +477,10 @@ const Home = () => {
                 fluides.
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Section "Points Forts" */}
-          <div>
+          {/* <div>
             <h3 className="text-2xl font-semibold text-gray-900 mb-4 z-50">
               Points Forts
             </h3>
@@ -429,8 +501,12 @@ const Home = () => {
           </div>
         </motion.div>
       </div>
-    </section>
-      <section className="bg-gray-100 h-screen ">
+    </section> */}
+    <section className="relative h-screen ">
+      <div 
+    className="absolute inset-0 bg-[url('/section6-bg.png')] bg-no-repeat bg-cover bg-center blur-sm" ></div>
+     
+     <div className="absolute inset-0 bg-black opacity-10"></div>
       <div className="container grid grid-cols-2 items-center h-screen  mx-auto px-6">
       <motion.div
             className="container mx-auto px-6  lg:px-20 text-start"
@@ -439,7 +515,7 @@ const Home = () => {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-4xl font-bold text-gray-900 mb-4">les outils de devloppement</h1>
-            <ul className="text-gray-700 text-lg font-semibold pl-10">
+            {/* <ul className="text-gray-700 text-lg font-semibold pl-10">
               <li>Python</li>
               <li>Flask</li>
               <li>React</li>
@@ -450,7 +526,7 @@ const Home = () => {
               <li>Taillwind</li>
               <li>JavaScript</li>
               <li>TypeScript</li>
-            </ul>
+            </ul> */}
 
       </motion.div>
         <div className="relative flex  max-w-lg max-h-lg items-center justify-center overflow-hidden rounded-lg border bg-background px-20 py-20 ">

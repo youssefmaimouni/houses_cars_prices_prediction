@@ -12,14 +12,18 @@ import HousesDataAnalyst from "./pages/HousesDataAnalyst";
 import Test from "./pages/Test";
 import CarsCleaning from "./pages/CarsCleaning";
 import HousesCleaning from "./pages/HousesCleaning";
+import NeuralNetworksAI from "./pages/NeuralNetworksAI";
+import HousesModel from "./pages/HousesModel";
+import "./App.css"
 
 const App = () => {
   return (
     <Router>
       <Routes>
         {/* Public Route without Layout */}
-        <Route path="/" element={<Home />} />
-        
+        <Route path="/" element={
+            <Home /> 
+        }/>
         {/* Routes with Default Layout */}
         <Route
           path="/Analyse/cars"
@@ -46,6 +50,14 @@ const App = () => {
           }
         />
         <Route
+          path="/Models/Houses-model"
+          element={
+            <DefaultLayout>
+              <HousesModel/>
+            </DefaultLayout>
+          }
+        />
+        <Route
           path="/Data_Cleaning/Cars"
           element={
             <DefaultLayout>
@@ -58,6 +70,14 @@ const App = () => {
           element={
             <DefaultLayout>
               <HousesCleaning/>
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/NeuralNetworks"
+          element={
+            <DefaultLayout>
+              <NeuralNetworksAI/>
             </DefaultLayout>
           }
         />

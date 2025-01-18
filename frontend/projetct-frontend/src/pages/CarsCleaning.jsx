@@ -6,7 +6,7 @@ const CarsCleaning = () => {
      const { titre, setTitre } = useTitre();
         setTitre("Cars Data Cleaning");
   return (
-    <section className="bg-gray-100 min-h-screen flex justify-center items-center">
+    <section className="bg-gray-100 h-screen  flex justify-center items-center">
       <div className="container w-full">
         <iframe
           src="/static/cleaning/cars_data_cleaning.html"

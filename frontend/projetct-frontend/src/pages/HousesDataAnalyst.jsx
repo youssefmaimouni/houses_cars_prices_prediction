@@ -14,7 +14,7 @@ import BoxPlotHouseAge from "../components/Charts_houses/BoxPlotHouseAge";
 const HousesDataAnalyst = () => {
   const { titre, setTitre } = useTitre();
   setTitre("houses Data Analyst");
-  return (<div className="h-screen w-full m-5">
+  return (<div className="h-screen w-full ">
      <div className="grid grid-cols-2 gap-2">
         <PrixVsSurface/>
         <DistributionProprietes/>
